@@ -18,7 +18,12 @@ import { v4 as uuidv4 } from 'uuid'
 import { InsertAccountData } from '@shared/types'
 
 async function registerAccount({ body }: Request, res: Response): Promise<unknown> {
-  const { email, password, user_data = {} } = await registerSchema.validateAsync(body)
+  const {
+    email,
+    password,
+    user_data = {},
+    register_options = {}
+  } = await registerSchema.validateAsync(body)
   const account = await selectAccount(body)
 
   if (account) {
@@ -33,6 +38,10 @@ async function registerAccount({ body }: Request, res: Response): Promise<unknow
   ticket_expires_at.setTime(now.getTime() + 60 * 60 * 1000) // active for 60 minutes
   const password_hash = await hashPassword(password)
 
+  const defaultRole = register_options.default_role ?? DEFAULT_USER_ROLE
+  const allowedRoles = register_options.allowed_roles ?? DEFAULT_ALLOWED_USER_ROLES
+  const accountRoles = allowedRoles.map((role: string) => ({ role }))
+
   try {
     await request<InsertAccountData>(insertAccount, {
       account: {
@@ -41,9 +50,9 @@ async function registerAccount({ body }: Request, res: Response): Promise<unknow
         ticket,
         ticket_expires_at,
         active: AUTO_ACTIVATE_NEW_USERS,
-        default_role: DEFAULT_USER_ROLE,
+        default_role: defaultRole,
         account_roles: {
-          data: DEFAULT_ALLOWED_USER_ROLES.map((role) => ({ role }))
+          data: accountRoles
         },
         user: {
           data: { display_name: email, ...user_data }
