@@ -141,10 +141,7 @@ export const selectRefreshToken = gql`
 `
 
 export const updateRefreshToken = gql`
-  mutation($old_refresh_token: uuid!, $new_refresh_token_data: auth_refresh_tokens_insert_input!) {
-    delete_auth_refresh_tokens(where: { refresh_token: { _eq: $old_refresh_token } }) {
-      affected_rows
-    }
+  mutation($new_refresh_token_data: auth_refresh_tokens_insert_input!) {
     insert_auth_refresh_tokens(objects: [$new_refresh_token_data]) {
       affected_rows
     }

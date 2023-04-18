@@ -2,10 +2,10 @@
   "name": "hasura-backend-plus",
   "license": "MIT",
   "repository": {
-    "url": "git://github.com/nhost/hasura-backend-plus.git",
+    "url": "git://github.com/aaronhayes/hasura-backend-plus.git",
     "type": "git"
   },
-  "version": "2.3.0",
+  "version": "2.5.0",
   "main": "src/start.ts",
   "scripts": {
     "build": "tsc",
@@ -68,7 +68,7 @@
     "passport-twitter": "^1.0.4",
     "passport-windowslive": "^1.0.2",
     "qrcode": "1.4.4",
-    "sharp": "^0.27.0",
+    "sharp": "^0.32.0",
     "temp-dir": "^2.0.0",
     "uuid": "7.0.3"
   },

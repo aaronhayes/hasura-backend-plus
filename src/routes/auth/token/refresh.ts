@@ -1,6 +1,6 @@
 import { asyncWrapper } from '@shared/helpers'
 import { Response } from 'express'
-import { selectRefreshToken, updateRefreshToken } from '@shared/queries'
+import { deleteRefreshToken, selectRefreshToken, updateRefreshToken } from '@shared/queries'
 
 import Boom from '@hapi/boom'
 import { newJwtExpiry, createHasuraJwt, generatePermissionVariables } from '@shared/jwt'
@@ -11,6 +11,18 @@ import { AccountData, UserData, Session, RequestExtended } from '@shared/types'
 
 interface HasuraData {
   auth_refresh_tokens: { account: AccountData }[]
+}
+
+async function delayedDeleteRefreshToken(refreshToken: string) {
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 10000))
+    await request(deleteRefreshToken, {
+      refresh_token: refreshToken
+    })
+    console.log('Deleted used refresh token')
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 async function refreshToken({ refresh_token }: RequestExtended, res: Response): Promise<void> {
@@ -36,13 +48,14 @@ async function refreshToken({ refresh_token }: RequestExtended, res: Response): 
   // and insert new refresh token
   try {
     await request(updateRefreshToken, {
-      old_refresh_token: refresh_token.value,
       new_refresh_token_data: {
         account_id: account.id,
         refresh_token: new_refresh_token,
         expires_at: new Date(newRefreshExpiry())
       }
     })
+
+    void delayedDeleteRefreshToken(refresh_token.value)
   } catch (error) {
     throw Boom.badImplementation('Unable to set new refresh token')
   }
