@@ -21,7 +21,8 @@ async function delayedDeleteRefreshToken(refreshToken: string) {
     })
     console.log('Deleted used refresh token')
   } catch (error) {
-    console.error(error)
+    // Most likely already deleted
+    console.warn(error)
   }
 }
 
