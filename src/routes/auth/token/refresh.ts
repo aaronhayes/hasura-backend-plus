@@ -15,7 +15,7 @@ interface HasuraData {
 
 async function delayedDeleteRefreshToken(refreshToken: string) {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 10000))
+    await new Promise((resolve) => setTimeout(resolve, 20000))
     await request(deleteRefreshToken, {
       refresh_token: refreshToken
     })
