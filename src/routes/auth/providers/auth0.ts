@@ -20,7 +20,7 @@ export default (router: Router): void => {
       )
     }
     router.use(
-      '/twitter',
+      '/auth0',
       session({
         secret: COOKIE_SECRET,
         resave: false,
