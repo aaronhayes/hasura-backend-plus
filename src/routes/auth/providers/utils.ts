@@ -9,7 +9,7 @@ import {
   SERVER_URL,
   PROVIDERS,
   DEFAULT_USER_ROLE,
-  DEFAULT_ALLOWED_USER_ROLES,
+  DEFAULT_ALLOWED_USER_ROLES
 } from '@shared/config'
 import { insertAccount, insertAccountProviderToUser, selectAccountProvider } from '@shared/queries'
 import { selectAccountByEmail } from '@shared/helpers'
@@ -142,6 +142,8 @@ export const initProvider = <T extends Strategy>(
   strategy: Constructable<T>,
   settings: InitProviderSettings & ConstructorParameters<Constructable<T>>[0] // TODO: Strategy option type is not inferred correctly
 ): void => {
+  console.debug('Init provider', { strategyName })
+
   const {
     transformProfile = ({ id, emails, displayName, photos }: Profile): UserData => ({
       id,

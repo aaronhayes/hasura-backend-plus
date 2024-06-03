@@ -82,11 +82,20 @@ if (castBooleanEnv('WINDOWS_LIVE_ENABLE')) {
 
 // Spotify OAuth2 provider settings
 if (castBooleanEnv('SPOTIFY_ENABLE')) {
-    PROVIDERS.spotify = {
-      clientID: process.env.SPOTIFY_CLIENT_ID,
-      clientSecret: process.env.SPOTIFY_CLIENT_SECRET
-    }
+  PROVIDERS.spotify = {
+    clientID: process.env.SPOTIFY_CLIENT_ID,
+    clientSecret: process.env.SPOTIFY_CLIENT_SECRET
   }
+}
+
+// Auth0 Provider
+if (castBooleanEnv('AUTH0_ENABLE')) {
+  PROVIDERS.auth0 = {
+    domain: process.env.AUTH0_DOMAIN,
+    clientID: process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET
+  }
+}
 
 export { PROVIDERS }
 
