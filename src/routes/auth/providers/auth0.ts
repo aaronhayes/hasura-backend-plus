@@ -8,6 +8,7 @@ import session from 'express-session'
 
 export default (router: Router): void => {
   const options = PROVIDERS.auth0
+
   if (options) {
     // Checks if the strategy has required keys
     if (!options.domain || !options.clientID || !options.clientSecret) {
@@ -19,6 +20,7 @@ export default (router: Router): void => {
         'Missing COOKIE_SECRET environment variable that is required for Auth0.'
       )
     }
+
     router.use(
       '/auth0',
       session({
@@ -29,7 +31,8 @@ export default (router: Router): void => {
     )
 
     initProvider(router, 'auth0', Strategy, {
-      scope: 'openid email profile'
+      scope: 'openid email profile',
+      state: false
     })
   }
 }

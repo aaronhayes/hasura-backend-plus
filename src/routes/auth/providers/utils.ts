@@ -129,6 +129,7 @@ const providerCallback = async (req: RequestExtended, res: Response): Promise<vo
   try {
     refresh_token = await setRefreshToken(res, account.id, true)
   } catch (e) {
+    console.warn('Callback error', e)
     res.redirect(PROVIDER_FAILURE_REDIRECT as string)
   }
 
