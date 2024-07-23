@@ -10,6 +10,7 @@ import windowslive from './windowslive'
 import linkedin from './linkedin'
 import spotify from './spotify'
 import auth0 from './auth0'
+import ljhooker from './ljhooker'
 
 const initRoutes = (): Router | undefined => {
   if (AUTH_HAS_ONE_PROVIDER) {
@@ -24,6 +25,7 @@ const initRoutes = (): Router | undefined => {
     linkedin(router)
     spotify(router)
     auth0(router)
+    ljhooker(router)
     return router
   }
 }

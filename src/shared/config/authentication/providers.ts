@@ -97,6 +97,16 @@ if (castBooleanEnv('AUTH0_ENABLE')) {
   }
 }
 
+// LJHooker Provider
+if (castBooleanEnv('LJHOOKER_ENABLE')) {
+  PROVIDERS.ljhooker = {
+    authorizationURL: process.env.AUTHORIZATION_URL,
+    tokenURL: process.env.TOKEN_URL,
+    clientID: process.env.LJHOOKER_CLIENT_ID,
+    clientSecret: process.env.LJHOOKER_CLIENT_SECRET
+  }
+}
+
 export { PROVIDERS }
 
 // True if at least one of the providers is enabled
